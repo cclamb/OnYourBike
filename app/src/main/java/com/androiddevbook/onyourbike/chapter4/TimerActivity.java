@@ -6,10 +6,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
-public class TimerActivity extends ActionBarActivity {
+public final class TimerActivity extends ActionBarActivity {
 
-    protected final String ME = getClass().getName();
+    private final String ME = getClass().getName();
+
+    private TextView counter;
+    private Button start;
+    private Button stop;
+    private boolean isTimerRunning;
 
     public TimerActivity() {
         super();
@@ -34,8 +42,10 @@ public class TimerActivity extends ActionBarActivity {
                             .build()
             );
         }
+        counter = (TextView) findViewById(R.id.timer);
+        start = (Button) findViewById(R.id.start_button);
+        stop = (Button) findViewById(R.id.stop_button);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -63,4 +73,23 @@ public class TimerActivity extends ActionBarActivity {
     public String toString() {
         return getClass().getName();
     }
+
+    public void onClickStart(View view) {
+        Log.d(ME, "start clicked");
+        isTimerRunning = true;
+        enableButtons();
+    }
+
+    public void onClickStop(View view) {
+        Log.d(ME, "stop clicked");
+        isTimerRunning = false;
+        enableButtons();
+    }
+
+    private void enableButtons() {
+        Log.d(ME, "Set buttons enabled/disabled.");
+        start.setEnabled(!isTimerRunning);
+        stop.setEnabled(isTimerRunning);
+    }
+
 }
