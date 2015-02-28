@@ -35,6 +35,14 @@
             android:layout_weight="1"
             android:onClick="onClickStop"
             android:text="@string/stop_button" />
+
+        <Button
+            android:id="@+id/settings_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/settings_button"
+            android:onClick="onClickSettings" />
     </LinearLayout>
 
 </RelativeLayout>

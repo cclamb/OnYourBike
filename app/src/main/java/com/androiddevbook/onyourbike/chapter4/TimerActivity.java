@@ -1,6 +1,9 @@
 package com.androiddevbook.onyourbike.chapter4;
 
+import android.content.Intent;
+import android.os.Handler;
 import android.os.StrictMode;
+import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +15,9 @@ import android.widget.TextView;
 
 public final class TimerActivity extends ActionBarActivity {
 
+    private static final long INTERVAL = 200;
+
+
     private final String ME = getClass().getName();
 
     private TextView counter;
@@ -20,6 +26,10 @@ public final class TimerActivity extends ActionBarActivity {
     private boolean isTimerRunning;
     private long startedAt;
     private long lastStopped;
+    private Handler handler;
+    private Runnable updateTimer;
+    private Vibrator vibrate;
+    private long lastSeconds;
 
     public TimerActivity() {
         super();
@@ -50,6 +60,35 @@ public final class TimerActivity extends ActionBarActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (isTimerRunning) {
+            setHandler();
+        }
+
+        vibrate = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        if (vibrate == null) {
+            Log.w(ME, "no vibe service here");
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (isTimerRunning) {
+            clearHandler();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        enableButtons();
+        setTimeDisplay();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_timer, menu);
@@ -71,16 +110,12 @@ public final class TimerActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public String toString() {
-        return getClass().getName();
-    }
-
     public void onClickStart(View view) {
         Log.d(ME, "start clicked");
         isTimerRunning = true;
-        enableButtons();
         startedAt = System.currentTimeMillis();
+        enableButtons();
+        setHandler();
     }
 
     public void onClickStop(View view) {
@@ -89,6 +124,36 @@ public final class TimerActivity extends ActionBarActivity {
         enableButtons();
         lastStopped = System.currentTimeMillis();
         setTimeDisplay();
+        clearHandler();
+    }
+
+    public void onClickSettings(View view) {
+        Log.d(ME, "clicked settings");
+        Intent settingsIntent = new Intent(getApplicationContext(),
+                SettingsActivity.class);
+        startActivity(settingsIntent);
+    }
+
+    private void clearHandler() {
+        handler.removeCallbacks(updateTimer);
+        handler = null;
+    }
+
+    private void setHandler() {
+        handler = new Handler();
+        updateTimer = new Runnable() {
+            @Override
+            public void run() {
+                setTimeDisplay();
+                if (isTimerRunning) {
+                    vibrateCheck();
+                }
+                if (handler != null) {
+                    handler.postDelayed(this, INTERVAL);
+                }
+            }
+        };
+        handler.postDelayed(updateTimer, INTERVAL);
     }
 
     private void enableButtons() {
@@ -105,8 +170,6 @@ public final class TimerActivity extends ActionBarActivity {
         long seconds;
         long minutes;
         long hours;
-
-        Log.d(ME, "Setting time display");
 
         if (isTimerRunning) {
             timeNow = System.currentTimeMillis();
@@ -132,5 +195,46 @@ public final class TimerActivity extends ActionBarActivity {
                 + String.format("%02d", seconds);
 
         counter.setText(display);
+    }
+
+    protected void vibrateCheck() {
+        long timeNow = System.currentTimeMillis();
+        long diff = timeNow - startedAt;
+        long seconds = diff / 1000;
+        long minutes = seconds / 60;
+
+        Log.d(ME, "vibrateCheck");
+
+        seconds = seconds % 60;
+        minutes = minutes % 60;
+
+        if (vibrate != null && seconds == 0 && seconds != lastSeconds) {
+            long[] once = { 0, 100 };
+            long[] twice = { 0, 100, 400, 100 };
+            long[] thrice = { 0, 100, 400, 100, 400, 100 };
+
+            // every hour
+            if (minutes == 0) {
+                Log.i(ME, "Vibrate 3 times");
+                vibrate.vibrate(thrice, -1);
+            }
+            // every 15 minutes
+            else if (minutes % 15 == 0) {
+                Log.i(ME, "Vibrate 2 time");
+                vibrate.vibrate(twice, -1);
+            }
+            // every 5 minutes
+            else if (minutes % 5 == 0) {
+                Log.i(ME, "Vibrate once");
+                vibrate.vibrate(once, -1);
+            }
+        }
+
+        lastSeconds = seconds;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getName();
     }
 }
