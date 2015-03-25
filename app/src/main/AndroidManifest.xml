@@ -2,7 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.androiddevbook.onyourbike.chapter4" >
 
-    <uses-permission android:name="android.permission.vibrate" />
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:maxSdkVersion="21" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".YetiTimezApplication"
@@ -15,7 +19,6 @@
             android:label="@string/title_activity_timer" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

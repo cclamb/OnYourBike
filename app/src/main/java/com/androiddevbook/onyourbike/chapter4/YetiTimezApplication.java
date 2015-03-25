@@ -7,14 +7,14 @@ import android.app.Application;
  */
 public final class YetiTimezApplication extends Application {
 
-    private Settings settings;
+    static private Settings settings;
 
     public Settings getSettings() {
         if (settings == null) settings = new Settings();
         return settings;
     }
 
-    public void setSettings(Settings settings) {
-        this.settings = settings;
-    }
+//    public void setSettings(Settings settings) {
+//        this.settings = settings;
+//    }
 }
