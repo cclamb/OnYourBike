@@ -23,9 +23,7 @@ public final class TimerActivity extends ActionBarActivity {
     private TextView counter;
     private Button start;
     private Button stop;
-    private boolean isTimerRunning;
-    private long startedAt;
-    private long lastStopped;
+    private TimerState timer;
     private Handler handler;
     private Runnable updateTimer;
     private Vibrator vibrate;
@@ -33,6 +31,7 @@ public final class TimerActivity extends ActionBarActivity {
 
     public TimerActivity() {
         super();
+        timer = new TimerState();
     }
 
     @Override
@@ -63,7 +62,7 @@ public final class TimerActivity extends ActionBarActivity {
     protected void onStart() {
         super.onStart();
 
-        if (isTimerRunning) {
+        if (timer.isRunning()) {
             setHandler();
         }
 
@@ -76,7 +75,7 @@ public final class TimerActivity extends ActionBarActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if (isTimerRunning) {
+        if (timer.isRunning()) {
             clearHandler();
         }
     }
@@ -85,7 +84,7 @@ public final class TimerActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
         enableButtons();
-        setTimeDisplay();
+        counter.setText(timer.display());
     }
 
     @Override
@@ -112,18 +111,16 @@ public final class TimerActivity extends ActionBarActivity {
 
     public void onClickStart(View view) {
         Log.d(ME, "start clicked");
-        isTimerRunning = true;
-        startedAt = System.currentTimeMillis();
+        timer.start();
         enableButtons();
         setHandler();
     }
 
     public void onClickStop(View view) {
         Log.d(ME, "stop clicked");
-        isTimerRunning = false;
+        timer.stop();
         enableButtons();
-        lastStopped = System.currentTimeMillis();
-        setTimeDisplay();
+        counter.setText(timer.display());
         clearHandler();
     }
 
@@ -144,8 +141,8 @@ public final class TimerActivity extends ActionBarActivity {
         updateTimer = new Runnable() {
             @Override
             public void run() {
-                setTimeDisplay();
-                if (isTimerRunning) {
+                counter.setText(timer.display());
+                if (timer.isRunning()) {
                     vibrateCheck();
                 }
                 if (handler != null) {
@@ -158,48 +155,13 @@ public final class TimerActivity extends ActionBarActivity {
 
     private void enableButtons() {
         Log.d(ME, "Set buttons enabled/disabled.");
-        start.setEnabled(!isTimerRunning);
-        stop.setEnabled(isTimerRunning);
-        setTimeDisplay();
-    }
-
-    private void setTimeDisplay() {
-        String display;
-        long timeNow;
-        long diff;
-        long seconds;
-        long minutes;
-        long hours;
-
-        if (isTimerRunning) {
-            timeNow = System.currentTimeMillis();
-        } else {
-            timeNow = lastStopped;
-        }
-
-        diff = timeNow - startedAt;
-
-        // no negative time
-        if (diff < 0) {
-            diff = 0;
-        }
-
-        seconds = diff / 1000;
-        minutes = seconds / 60;
-        hours = minutes / 60;
-        seconds = seconds % 60;
-        minutes = minutes % 60;
-
-        display = String.format("%d", hours) + ":"
-                + String.format("%02d", minutes) + ":"
-                + String.format("%02d", seconds);
-
-        counter.setText(display);
+        start.setEnabled(!timer.isRunning());
+        stop.setEnabled(timer.isRunning());
+        counter.setText(timer.display());
     }
 
     protected void vibrateCheck() {
-        long timeNow = System.currentTimeMillis();
-        long diff = timeNow - startedAt;
+        long diff = timer.elapsedTime();
         long seconds = diff / 1000;
         long minutes = seconds / 60;
 

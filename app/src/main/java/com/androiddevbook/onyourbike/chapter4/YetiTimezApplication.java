@@ -4,6 +4,8 @@ import android.app.Application;
 
 /**
  * Created by cclamb on 2/28/15.
+ *
+ * The entry point for the yeti timez application.
  */
 public final class YetiTimezApplication extends Application {
 

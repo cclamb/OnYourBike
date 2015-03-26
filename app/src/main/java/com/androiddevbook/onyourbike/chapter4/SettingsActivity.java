@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CheckBox;
 
 
@@ -48,5 +49,15 @@ public final class SettingsActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void vibrateChanged(View view) {
+        Toaster toast = new Toaster(getApplicationContext());
+
+        if (vibrate.isChecked()) {
+            toast.make(R.string.vibrate_on);
+        } else {
+            toast.make(R.string.vibrate_off);
+        }
     }
 }
