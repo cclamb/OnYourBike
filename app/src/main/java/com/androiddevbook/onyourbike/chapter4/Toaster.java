@@ -22,7 +22,7 @@ public final class Toaster {
     }
 
     public void make(int resource) {
-        Log.d(CLASS_NAME, "make()");
+        Log.d(CLASS_NAME, "Toaster.make(.)");
         Toast toast = Toast.makeText(context, resource, TOAST_DURATION);
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         toast.show();

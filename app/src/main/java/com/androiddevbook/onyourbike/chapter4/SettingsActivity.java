@@ -60,4 +60,8 @@ public final class SettingsActivity extends ActionBarActivity {
             toast.make(R.string.vibrate_off);
         }
     }
+
+    public void goBack(View view) {
+        finish();
+    }
 }
