@@ -1,11 +1,11 @@
-package com.androiddevbook.onyourbike.chapter4;
+package com.yeti.timez.application;
 
 import android.app.Application;
 
 /**
  * Created by cclamb on 2/28/15.
  *
- * The entry point for the yeti timez application.
+ * The entry point for the yeti com.yeti.com.yeti.timez application.
  */
 public final class YetiTimezApplication extends Application {
 

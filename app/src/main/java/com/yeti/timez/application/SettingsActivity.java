@@ -1,4 +1,4 @@
-package com.androiddevbook.onyourbike.chapter4;
+package com.yeti.timez.application;
 
 //import android.app.ActionBar;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+
+import com.yeti.timez.R;
 
 
 public final class SettingsActivity extends ActionBarActivity {

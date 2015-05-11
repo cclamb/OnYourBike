@@ -1,4 +1,4 @@
-package com.androiddevbook.onyourbike.chapter4;
+package com.yeti.timez.application;
 
 import android.content.Context;
 import android.util.Log;

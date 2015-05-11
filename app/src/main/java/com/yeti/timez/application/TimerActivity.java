@@ -1,4 +1,4 @@
-package com.androiddevbook.onyourbike.chapter4;
+package com.yeti.timez.application;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -13,6 +13,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.yeti.timez.BuildConfig;
+import com.yeti.timez.R;
+
 public final class TimerActivity extends ActionBarActivity {
 
     private static final long INTERVAL = 200;
@@ -20,6 +23,7 @@ public final class TimerActivity extends ActionBarActivity {
 
     private final String ME = getClass().getName();
 
+    private Notify notify;
     private TextView counter;
     private Button start;
     private Button stop;
@@ -144,13 +148,39 @@ public final class TimerActivity extends ActionBarActivity {
                 counter.setText(timer.display());
                 if (timer.isRunning()) {
                     vibrateCheck();
+                    notifyCheck();
                 }
+
                 if (handler != null) {
                     handler.postDelayed(this, INTERVAL);
                 }
             }
         };
         handler.postDelayed(updateTimer, INTERVAL);
+    }
+
+    private void notifyCheck() {
+        long diff = timer.elapsedTime();
+        long seconds = diff / 1000;
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+
+        Log.d(ME, "notifyCheck");
+
+        if (minutes % 15 == 0 && seconds == 0 && seconds != lastSeconds) {
+            String title = getResources().getString(R.string.time_title);
+            String message = getResources().getString(R.string.time_running_message);
+
+            if (hours == 0 && minutes == 0) {
+                message = getResources().getString(R.string.time_start_message);
+            }
+
+            message = String.format(message, hours, minutes);
+
+            notify.notify(title, message);
+        }
+
+        lastSeconds = seconds;
     }
 
     private void enableButtons() {

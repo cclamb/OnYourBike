@@ -1,4 +1,4 @@
-package com.androiddevbook.onyourbike.chapter4;
+package com.yeti.timez;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
