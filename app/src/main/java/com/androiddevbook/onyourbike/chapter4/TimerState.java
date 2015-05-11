@@ -75,8 +75,8 @@ public final class TimerState {
         minutes = minutes % 60;
 
         display = String.format("%d", hours) + ":"
-                + String.format("%d", minutes) + ":"
-                + String.format("%d", seconds);
+                + String.format("%02d", minutes) + ":"
+                + String.format("%02d", seconds);
 
         Log.i(CLASS_NAME, "Time is " + display);
 
