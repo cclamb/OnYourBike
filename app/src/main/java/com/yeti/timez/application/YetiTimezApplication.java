@@ -2,6 +2,8 @@ package com.yeti.timez.application;
 
 import android.app.Application;
 
+import com.yeti.timez.utilities.SQLiteHelper;
+
 /**
  * Created by cclamb on 2/28/15.
  *
@@ -16,7 +18,10 @@ public final class YetiTimezApplication extends Application {
         return settings;
     }
 
-//    public void setSettings(Settings settings) {
-//        this.settings = settings;
-//    }
+    @Override
+    public void onCreate() {
+        SQLiteHelper helper = new SQLiteHelper(getApplicationContext());
+        super.onCreate();
+        helper.create();
+    }
 }
