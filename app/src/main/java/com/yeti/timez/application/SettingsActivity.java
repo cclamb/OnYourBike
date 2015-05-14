@@ -1,6 +1,5 @@
 package com.yeti.timez.application;
 
-//import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.ActionBar;
