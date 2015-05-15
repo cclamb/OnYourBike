@@ -9,4 +9,10 @@
         android:orderInCategory="100"
         app:showAsAction="always|withText" />
 
+    <item
+        android:id="@+id/menu_routes"
+        android:orderInCategory="200"
+        app:showAsAction="always|withText"
+        android:title="@string/menu_routes" />
+
 </menu>

@@ -108,9 +108,18 @@ public final class TimerActivity extends ActionBarActivity {
             case R.id.menu_settings:
                 onClickSettings(null);
                 return true;
+            case R.id.menu_routes:
+                onClickedRoutes();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void onClickedRoutes() {
+        Log.d(ME, "clickedRoutes");
+        Intent routes = new Intent(getApplicationContext(), RoutesActivity.class);
+        startActivity(routes);
     }
 
     public void onClickStart(View view) {
@@ -130,8 +139,7 @@ public final class TimerActivity extends ActionBarActivity {
 
     public void onClickSettings(View view) {
         Log.d(ME, "clicked settings");
-        Intent settingsIntent = new Intent(getApplicationContext(),
-                SettingsActivity.class);
+        Intent settingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
         startActivity(settingsIntent);
     }
 

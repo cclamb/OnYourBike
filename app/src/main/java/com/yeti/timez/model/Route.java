@@ -23,4 +23,13 @@ public class Route {
         String dropTable = "drop table if exists routes;";
         db.execSQL(dropTable);
     }
+
+    public void setid(int id) {
+        this._id = id;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

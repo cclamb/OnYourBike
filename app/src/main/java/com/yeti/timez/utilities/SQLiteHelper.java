@@ -19,12 +19,12 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public void open() {
-        getWritableDatabase();
+    public SQLiteDatabase open() {
+        return getWritableDatabase();
     }
 
-    public void create() {
-        open();
+    public SQLiteDatabase create() {
+        return open();
     }
 
     public void onConfigure(SQLiteDatabase db) {

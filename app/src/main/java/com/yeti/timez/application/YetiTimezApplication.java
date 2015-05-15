@@ -13,6 +13,8 @@ public final class YetiTimezApplication extends Application {
 
     static private Settings settings;
 
+    private SQLiteHelper helper;
+
     public Settings getSettings() {
         if (settings == null) settings = new Settings();
         return settings;
@@ -23,5 +25,10 @@ public final class YetiTimezApplication extends Application {
         SQLiteHelper helper = new SQLiteHelper(getApplicationContext());
         super.onCreate();
         helper.create();
+    }
+
+    public SQLiteHelper getSQLiteHelper() {
+        if (helper == null) {  helper = new SQLiteHelper(this); }
+        return helper;
     }
 }

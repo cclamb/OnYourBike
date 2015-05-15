@@ -1,17 +1,37 @@
 package com.yeti.timez.application;
 
 import android.app.ListActivity;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 
 import com.yeti.timez.R;
+import com.yeti.timez.model.Route;
+import com.yeti.timez.model.Routes;
+import com.yeti.timez.utilities.SQLiteHelper;
+
+import java.util.List;
 
 public class RoutesActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SQLiteHelper helper = ((YetiTimezApplication) getApplication()).getSQLiteHelper();
+
+        SQLiteDatabase database = helper.open();
+        List<Route> routes = Routes.getAll(helper, database);
+        helper.close();
+
+        ArrayAdapter<Route> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_list_item_1,
+                routes
+        );
+        setListAdapter(adapter);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_routes);
     }

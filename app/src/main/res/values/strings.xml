@@ -17,6 +17,6 @@
     <string name="time_start_message" >You have just started.</string>
     <string name="time_title">Time</string>
     <string name="title_activity_routes">Routes</string>
-
+    <string name="menu_routes" >Routes</string>
     <string name="hello_world">Hello world!</string>
 </resources>
