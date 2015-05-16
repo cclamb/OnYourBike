@@ -1,7 +1,9 @@
 package com.yeti.timez.application;
 
+import android.app.ActionBar;
 import android.app.ListActivity;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,6 +52,14 @@ public class RoutesActivity extends ListActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_routes);
+        setupActionBar();
+    }
+
+    private void setupActionBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            ActionBar actionBar = getActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private void setRoutes(List<Route> routes) {

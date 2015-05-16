@@ -1,11 +1,12 @@
 package com.yeti.timez.application;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.os.Vibrator;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +17,7 @@ import android.widget.TextView;
 import com.yeti.timez.BuildConfig;
 import com.yeti.timez.R;
 
-public final class TimerActivity extends ActionBarActivity {
+public final class TimerActivity extends Activity { //ActionBarActivity {
 
     private static final long INTERVAL = 200;
 

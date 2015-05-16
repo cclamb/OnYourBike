@@ -15,8 +15,8 @@
     <string name="time_running_message" >You have been riding for %1$02d:%2$02d. Keep it up!</string>
     <string name="time_start_ticker" >On your way!</string>
     <string name="time_start_message" >You have just started.</string>
-    <string name="time_title">Time</string>
-    <string name="title_activity_routes">Routes</string>
-    <string name="menu_routes" >Routes</string>
+    <string name="time_title">time</string>
+    <string name="title_activity_routes">routes</string>
+    <string name="menu_routes" >routes</string>
     <string name="hello_world">Hello world!</string>
 </resources>

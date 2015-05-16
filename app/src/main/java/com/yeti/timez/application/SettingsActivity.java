@@ -1,5 +1,6 @@
 package com.yeti.timez.application;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.ActionBar;
@@ -14,7 +15,7 @@ import android.widget.CheckBox;
 import com.yeti.timez.R;
 
 
-public final class SettingsActivity extends ActionBarActivity {
+public final class SettingsActivity extends Activity {//ActionBarActivity {
 
     private final String ME = getClass().getName();
 
@@ -32,7 +33,8 @@ public final class SettingsActivity extends ActionBarActivity {
 
     private void setupActionBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            ActionBar actionBar = getSupportActionBar();
+            //ActionBar actionBar = getSupportActionBar();
+            android.app.ActionBar actionBar = getActionBar();
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
