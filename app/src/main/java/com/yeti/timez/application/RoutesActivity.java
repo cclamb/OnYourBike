@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -17,13 +18,28 @@ import java.util.List;
 
 public class RoutesActivity extends ListActivity {
 
+    //private static Log log
+    private List<Route> routes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SQLiteHelper helper = ((YetiTimezApplication) getApplication()).getSQLiteHelper();
+        final SQLiteHelper helper = ((YetiTimezApplication) getApplication()).getSQLiteHelper();
 
-        SQLiteDatabase database = helper.open();
-        List<Route> routes = Routes.getAll(helper, database);
-        helper.close();
+        Thread t = new Thread() {
+            public void run() {
+                SQLiteDatabase database = helper.open();
+                List<Route> routes = Routes.getAll(helper, database);
+                setRoutes(routes);
+                helper.close();
+            }
+        };
+
+        t.start();
+        try {
+            t.join(5000);
+        } catch (InterruptedException e) {
+            Log.e("RoutesActivity", "onCreate(.)", e);
+        }
 
         ArrayAdapter<Route> adapter = new ArrayAdapter<>(
                 this,
@@ -34,6 +50,10 @@ public class RoutesActivity extends ListActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_routes);
+    }
+
+    private void setRoutes(List<Route> routes) {
+        this.routes = routes;
     }
 
     @Override
