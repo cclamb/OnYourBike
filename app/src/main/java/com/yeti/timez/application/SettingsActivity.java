@@ -3,8 +3,6 @@ package com.yeti.timez.application;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,7 +13,7 @@ import android.widget.CheckBox;
 import com.yeti.timez.R;
 
 
-public final class SettingsActivity extends Activity {//ActionBarActivity {
+public final class SettingsActivity extends Activity {
 
     private final String ME = getClass().getName();
 
